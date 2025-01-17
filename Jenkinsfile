@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-     label 'WorkerNode1'
-      }
+    agent any
     tools {
     maven 'maven'
     jdk 'jdk 20'
