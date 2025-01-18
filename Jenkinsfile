@@ -6,7 +6,7 @@ pipeline {
         jdk 'jdk17'
      }
      environment {
-        SCANNER_HOME = tool "sonarqube-scanner"
+        SCANNER_HOME= tool 'sonar-scanner'
      }
 
     stages {
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarServer') {
                     sh ''' 
-                    $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp -Dsonar.projectKey=bloggingApp -Dsonar.Java.Binaries=target -Dsonar.branch.name=main '''
+                    ' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp -Dsonar.projectKey=bloggingApp -Dsonar.Java.Binaries=target -Dsonar.branch.name=main '''
                    
                      sh "echo $SCANNER_HOME"
             }
