@@ -23,6 +23,15 @@ pipeline {
                 sh " mvn package"
             }
         }
+        stage('sonarqube') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh ''' 
+                    
+                    '''
+            }
+            }
+        }
         
     }
      post {
