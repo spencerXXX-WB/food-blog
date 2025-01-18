@@ -23,11 +23,7 @@ pipeline {
                 sh " mvn package"
             }
         }
-         stage('Sonarqube') {
-            steps {
-               // sh " mvn package"
-            }
-        }
+        
     }
      post {
   success {
