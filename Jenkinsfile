@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
     maven 'maven'
-    jdk 'jdk 20'
+    jdk 'jdk17'
      }
 
     stages {
@@ -20,6 +20,11 @@ pipeline {
         stage('Package') {
             steps {
                 sh " mvn package"
+            }
+        }
+         stage('Sonarqube') {
+            steps {
+               // sh " mvn package"
             }
         }
     }
