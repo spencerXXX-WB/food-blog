@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Sonarqube Analysis') {
             steps {
-                withSonarQubeEnv('sonarServer') {
+                withSonarQubeEnv('sonarserver') {
                     sh ''' 
                     ' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp -Dsonar.projectKey=bloggingApp -Dsonar.Java.Binaries=target -Dsonar.branch.name=main '''
                    
