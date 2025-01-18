@@ -2,8 +2,11 @@ pipeline {
     agent any
     
     tools {
-    maven 'maven'
-    jdk 'jdk17'
+        maven 'maven'
+        jdk 'jdk17'
+     }
+     environment {
+        SCANNER_HOME = tool 'sonarqube-scanner'
      }
 
     stages {
@@ -23,12 +26,16 @@ pipeline {
                 sh " mvn package"
             }
         }
-        stage('sonarqube') {
+        stage('Sonarqube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
+                withSonarQubeEnv('sonarServer') {
                     sh ''' 
-                    
+                    $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp \
+                    -Dsonar.projectKey=sonarToken \
+                    -Dsonar.JavaBinaries=target 
                     '''
+                   
+                     sh "echo $SCANNER_HOME"
             }
             }
         }
