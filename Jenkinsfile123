@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    tools {
+     maven 'maven'
+    }
+    environment {
+        SONAR_HOME = tool 'sonar-scanner'
+    } 
+   
+    
+
+    stages {
+        stage('Test') {
+            steps {
+                sh ' mvn test'
+            }
+        }
+        stage('Hello') {
+            steps {
+                withSonarQubeEnv('soanar') {
+                sh ''' 
+                    $SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp2 \
+                    -Dsonar.projectKey=bloggingApp2 \
+                    -Dsonar.java.binaries=target 
+                    '''
+                }
+            }
+        }
+        stage('Trivy') {
+            steps {
+                sh 'trivy fs --format table -o report.json .'
+            }
+        }
+        stage('Deploy Artifact to Nexus') {
+            steps {
+               withMaven(globalMavenSettingsConfig: '', jdk: '', maven: 'maven', mavenSettingsConfig: 'maven-settings', traceability: true) {
+                sh 'mvn deploy'
+                }
+            }
+        }
+    }
+}
