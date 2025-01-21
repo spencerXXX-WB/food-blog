@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarserver') {
                     sh ''' 
-                           $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp -Dsonar.projectKey=bloggingApp -Dsonar.java.binaries=target
+                           $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=bloggingApp2 -Dsonar.projectKey=bloggingApp2 -Dsonar.java.binaries=target
                        '''
                    
                      sh "echo $SCANNER_HOME"
@@ -40,7 +40,7 @@ pipeline {
         stage('Quality Gate') {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                 waitForQualityGate abortPipeline: false, credentialsId: 'sonarToken'
+                 waitForQualityGate abortPipeline: false, credentialsId: 'SonarSecret'
             }
             }
         }
